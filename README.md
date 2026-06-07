@@ -1,34 +1,41 @@
 # NI Potholes — Cost-Saving Maintenance Model
 
-This repo focuses on the final retained workflow for predicting pothole
-recurrence risk and turning that into a maintenance policy that aims to reduce
-repair cost.
+This repo contains the final retained workflow for turning historic pothole
+defect data into a maintenance policy that aims to reduce repair cost.
 
-The final pipeline uses official DfI surface-defect pothole records, official
-DfI road-network geometry and section lengths, a defect-level recurrence model,
-a section-level winter burden forecast, and a capacity-constrained maintenance
-scheduler.
+The project is built on official DfI surface-defect pothole records and
+official DfI road-network geometry. It does not try to model asphalt physics
+directly. It learns operational recurrence patterns from historic defect data,
+then uses those predictions inside a repair-planning simulation.
 
-The strongest final conclusion is:
+The strongest final conclusion is simple: the main saving comes from identifying
+high-burden road sections before winter and planning bundled permanent patching
+on those sections. The best defensible headline from the final scheduler is
+roughly `10-20%` expected cost saving, with the strongest practical case around
+`19.7%` saving and `35.4%` fewer expected defect events when bundled section
+patching is executed well.
 
-```text
-the main saving comes from identifying high-burden road sections before winter
-and planning bundled permanent patching on those sections
-```
+## What The Model Actually Is
 
-The best defensible headline from the final scheduler is roughly:
+This is not one single model. It is a three-layer system.
 
-```text
-~10-20% expected cost saving
-```
+1. A **defect-level recurrence model** predicts whether an official pothole
+defect is likely to be followed by another nearby defect soon. Technically this
+is a `HistGradientBoostingClassifier` from scikit-learn, trained on official
+surface-defect pothole records.
 
-with the strongest practical case around:
+2. A **section-level burden model** predicts how many pothole defects a road
+section is likely to generate over the next 180 days. Technically this is a
+`HistGradientBoostingRegressor` with Poisson loss, again using scikit-learn.
 
-```text
-~19.7% saving and ~35.4% fewer expected defect events
-```
+3. A **capacity-constrained maintenance scheduler** is layered on top of those
+predictions. This is not another ML model. It is a simulation that decides
+whether it is cheaper to do section treatment, selective spot upgrades, or just
+continue with reactive repair.
 
-when bundled section patching is executed well.
+The repo therefore answers a policy question, not just a prediction question:
+given limited crews and intervention costs, what should be repaired first, at
+what scale, and what saving is plausible?
 
 ## Final Workflow
 
@@ -47,6 +54,13 @@ python src/simulate_capacity_scheduler.py --fast \
   --out_csv models/capacity_scheduler_fast_results.csv
 ```
 
+The pipeline is intentionally narrow:
+
+- download and join official DfI road geometry
+- train the defect recurrence model
+- forecast winter burden by road section
+- simulate the final maintenance policy under cost/capacity constraints
+
 ## Main Scripts
 
 - `src/download_dfi_road_network_geometry.py`
@@ -64,6 +78,19 @@ python src/simulate_capacity_scheduler.py --fast \
 - `src/simulate_capacity_scheduler.py`
   Runs the final operations simulation with crew frequency/capacity constraints
   and compares section treatment versus enhanced spot intervention.
+
+## Technical Summary
+
+The retained technical stack is:
+
+- `HistGradientBoostingClassifier` for defect recurrence risk
+- `HistGradientBoostingRegressor` with Poisson loss for section burden
+- official DfI road-network geometry joined by `SECTION_CODE`
+- a final scheduler/simulation layer for economic decisions
+
+This is why the project should not be described as “an XGBoost model.” The
+machine-learning part is gradient-boosted trees from scikit-learn, and the
+final decision layer is a simulation.
 
 ## Main Outputs
 
@@ -112,6 +139,11 @@ What this means operationally:
 - Full resurfacing is not justified from pothole recurrence alone in this data.
   It needs separate pavement-condition and scheme-cost evidence.
 
+The important practical point is that the model is more useful for **planning**
+than for firing off lots of one-off “smart repairs.” Historic data is most
+valuable when it shows which sections repeatedly fail and should be treated as a
+bundle rather than patched over and over.
+
 ## Docs
 
 - `docs/FINAL_POLICY_RESULTS.md`
@@ -136,3 +168,11 @@ The open data does not contain:
 So the “repair changes future defects” part is simulated with explicit cost and
 effect assumptions. The model is therefore a robust decision-support system, not
 causal proof of exact savings.
+
+That means the strongest claims in this repo are:
+
+- which sections are historically likely to generate heavy future pothole burden
+- which policies look cost-effective under stated cost/effect assumptions
+
+The repo does **not** prove a specific repair technique causes a specific future
+reduction without additional intervention data.
