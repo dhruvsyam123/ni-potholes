@@ -133,8 +133,8 @@ Tier 3: resurfacing candidate list
 For the current data, the best defensible saving claim is:
 
 ```text
-~14-22% cost saving from model-guided repair planning,
-mostly through faster/better spot intervention and bundled section patching.
+~10-20% cost saving from model-guided repair planning,
+with the strongest practical result coming from bundled section patching.
 ```
 
 Avoid claiming:
@@ -150,6 +150,10 @@ The model identifies sections where repeated failures make bundled patching
 economically attractive, and produces a ranked resurfacing-candidate list that
 should be cross-checked against pavement-condition surveys before capital works.
 ```
+
+After adding crew frequency/capacity constraints in the final scheduler, the
+most realistic headline is closer to `~20%` than the earlier optimistic
+immediate-action simulations.
 
 ## Top Forecasted Sections
 
