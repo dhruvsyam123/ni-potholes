@@ -1,0 +1,226 @@
+{
+  "data": {
+    "inputs": [
+      "data/raw/surface_defects/surface_defects_2016.csv",
+      "data/raw/surface_defects/surface_defects_2017.csv"
+    ],
+    "rows_pothole_coded": 178645,
+    "date_min": "2016-04-01 08:32:00",
+    "date_max": "2018-03-31 11:34:00",
+    "target_positive_rate_all_rows": 0.5730303115116572,
+    "target": "repeat_within_14d_200m",
+    "radius_m": 200.0,
+    "horizon_days": 14,
+    "note": "Final horizon window excluded from train/val/test to avoid censored labels."
+  },
+  "split": {
+    "train_end": "2017-03-31",
+    "val_end": "2017-09-30",
+    "censor_cutoff": "2018-03-17 11:34:00",
+    "train_n": 94490,
+    "val_n": 27925,
+    "test_n": 49360
+  },
+  "models": {
+    "hgb": {
+      "train": {
+        "n": 94490,
+        "positive_rate": 0.5914699968250609,
+        "roc_auc": 0.7763495596631915,
+        "pr_auc": 0.8355357841695469,
+        "brier": 0.18865061986369583
+      },
+      "val": {
+        "n": 27925,
+        "positive_rate": 0.505496866606983,
+        "roc_auc": 0.7189400427575652,
+        "pr_auc": 0.7214555270720369,
+        "brier": 0.21625280396595215
+      },
+      "test": {
+        "n": 49360,
+        "positive_rate": 0.5689019448946515,
+        "roc_auc": 0.7076133651411118,
+        "pr_auc": 0.7492487915083277,
+        "brier": 0.21452984444275924
+      },
+      "thresholds_on_test": [
+        {
+          "threshold": 0.4,
+          "precision": 0.6369098712446352,
+          "recall": 0.871977493679,
+          "f1": 0.7361332411388029,
+          "flagged_rate": 0.7788695299837926,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.5700808625336928,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 3.1401617250673857
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.6967398489962076,
+          "recall": 0.7131156297852641,
+          "f1": 0.7048326352469114,
+          "flagged_rate": 0.582273095623987,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.4352559300873906,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.870511860174781
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.7488866396761134,
+          "recall": 0.5269755350592927,
+          "f1": 0.6186325536673565,
+          "flagged_rate": 0.40032414910858993,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.3353155831869172,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.6706311663738345
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.8019462966300235,
+          "recall": 0.3169402799045618,
+          "f1": 0.454325021057199,
+          "flagged_rate": 0.22483792544570502,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.2469662921348315,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.493932584269663
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.8526039178213092,
+          "recall": 0.12709661336846978,
+          "f1": 0.22121672296773795,
+          "flagged_rate": 0.08480551053484603,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.172877556738582,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.345755113477164
+        }
+      ],
+      "temperature_calibration": {
+        "temperature": 1.0499999999999998,
+        "val_brier_uncalibrated": 0.21625280396595215,
+        "test_brier_calibrated": 0.21469659576816497,
+        "thresholds_on_test_calibrated": [
+          {
+            "threshold": 0.4,
+            "precision": 0.6337478162573219,
+            "recall": 0.8784587443467113,
+            "f1": 0.7363032609506753,
+            "flagged_rate": 0.7885737439222043,
+            "break_even_avoided_cost_multiple_if_effective_100pct": 1.5779147073131183,
+            "break_even_avoided_cost_multiple_if_effective_50pct": 3.1558294146262367
+          },
+          {
+            "threshold": 0.5,
+            "precision": 0.6967398489962076,
+            "recall": 0.7131156297852641,
+            "f1": 0.7048326352469114,
+            "flagged_rate": 0.582273095623987,
+            "break_even_avoided_cost_multiple_if_effective_100pct": 1.4352559300873906,
+            "break_even_avoided_cost_multiple_if_effective_50pct": 2.870511860174781
+          },
+          {
+            "threshold": 0.6,
+            "precision": 0.7513857949541523,
+            "recall": 0.5165058224422208,
+            "f1": 0.6121897686982948,
+            "flagged_rate": 0.39106564019448947,
+            "break_even_avoided_cost_multiple_if_effective_100pct": 1.3308742415885273,
+            "break_even_avoided_cost_multiple_if_effective_50pct": 2.6617484831770546
+          },
+          {
+            "threshold": 0.7,
+            "precision": 0.807909604519774,
+            "recall": 0.3004522630960436,
+            "f1": 0.43801266742809675,
+            "flagged_rate": 0.2115680713128039,
+            "break_even_avoided_cost_multiple_if_effective_100pct": 1.2377622377622377,
+            "break_even_avoided_cost_multiple_if_effective_50pct": 2.4755244755244754
+          },
+          {
+            "threshold": 0.8,
+            "precision": 0.8543689320388349,
+            "recall": 0.10968270360742138,
+            "f1": 0.19440762481853185,
+            "flagged_rate": 0.07303484602917341,
+            "break_even_avoided_cost_multiple_if_effective_100pct": 1.1704545454545454,
+            "break_even_avoided_cost_multiple_if_effective_50pct": 2.340909090909091
+          }
+        ]
+      }
+    },
+    "logreg_route_sparse": {
+      "train": {
+        "n": 94490,
+        "positive_rate": 0.5914699968250609,
+        "roc_auc": 0.740688786793687,
+        "pr_auc": 0.803917407725468,
+        "brier": 0.2077880622812081
+      },
+      "val": {
+        "n": 27925,
+        "positive_rate": 0.505496866606983,
+        "roc_auc": 0.6800155292334737,
+        "pr_auc": 0.6963105920214807,
+        "brier": 0.2284201950778505
+      },
+      "test": {
+        "n": 49360,
+        "positive_rate": 0.5689019448946515,
+        "roc_auc": 0.6656648401629374,
+        "pr_auc": 0.7280870454691616,
+        "brier": 0.23618173752624846
+      },
+      "thresholds_on_test": [
+        {
+          "threshold": 0.4,
+          "precision": 0.6644630989856594,
+          "recall": 0.676507246892917,
+          "f1": 0.6704310846817596,
+          "flagged_rate": 0.5792139384116693,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.504974469653103,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 3.009948939306206
+        },
+        {
+          "threshold": 0.5,
+          "precision": 0.7189312977099237,
+          "recall": 0.5030803746305331,
+          "f1": 0.5919423435503132,
+          "flagged_rate": 0.398095623987034,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.3909534933106815,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.781906986621363
+        },
+        {
+          "threshold": 0.6,
+          "precision": 0.7703414167198468,
+          "recall": 0.3438980093301521,
+          "f1": 0.4755151783735874,
+          "flagged_rate": 0.2539708265802269,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.2981257119188154,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.596251423837631
+        },
+        {
+          "threshold": 0.7,
+          "precision": 0.8136090540729356,
+          "recall": 0.20736441009935544,
+          "f1": 0.33049548782564275,
+          "flagged_rate": 0.14499594813614264,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.229091533573759,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.458183067147518
+        },
+        {
+          "threshold": 0.8,
+          "precision": 0.8686319404693761,
+          "recall": 0.10808019657419607,
+          "f1": 0.19224069675376088,
+          "flagged_rate": 0.07078606158833063,
+          "break_even_avoided_cost_multiple_if_effective_100pct": 1.1512355848434925,
+          "break_even_avoided_cost_multiple_if_effective_50pct": 2.302471169686985
+        }
+      ]
+    }
+  },
+  "selected_model": "hgb",
+  "selection_metric": "validation_pr_auc",
+  "saved_model": "models/surface_recurrence_best.joblib",
+  "cost_function": {
+    "decision_rule": "act if p_repeat * effectiveness * avoided_repeat_cost > incremental_fast_repair_cost",
+    "threshold_formula": "p_repeat > incremental_fast_repair_cost / (effectiveness * avoided_repeat_cost)",
+    "interpretation": "The data does not contain repair costs, so the monetary function is parameterized. Threshold rows include the break-even avoided-cost multiple implied by observed precision."
+  }
+}

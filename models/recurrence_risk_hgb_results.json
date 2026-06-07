@@ -1,0 +1,55 @@
+{
+  "temporal_split": {
+    "train_end": "2016-12-31",
+    "val_end": "2017-02-28"
+  },
+  "metrics": {
+    "hgb": {
+      "train": {
+        "roc_auc": 0.8601424090819784,
+        "pr_auc": 0.5996784754303269,
+        "n": 3715,
+        "pos_rate": 0.14078061911170928
+      },
+      "val": {
+        "roc_auc": 0.6814093940790773,
+        "pr_auc": 0.39703413029515383,
+        "n": 1183,
+        "pos_rate": 0.18681318681318682
+      },
+      "test": {
+        "roc_auc": 0.6425816730694779,
+        "pr_auc": 0.3037656406247866,
+        "n": 983,
+        "pos_rate": 0.16683621566632756
+      }
+    },
+    "logreg": {
+      "train": {
+        "roc_auc": 0.7473469764276849,
+        "pr_auc": 0.38404367061930167,
+        "n": 3715,
+        "pos_rate": 0.14078061911170928
+      },
+      "val": {
+        "roc_auc": 0.6983142209386553,
+        "pr_auc": 0.47513603289364015,
+        "n": 1183,
+        "pos_rate": 0.18681318681318682
+      },
+      "test": {
+        "roc_auc": 0.6670761487834659,
+        "pr_auc": 0.3172546682391393,
+        "n": 983,
+        "pos_rate": 0.16683621566632756
+      }
+    }
+  },
+  "earlier_patch_heuristic": {
+    "n_multi_cells": 795,
+    "pct_2nd_within_7d_of_first": 29.68553459119497,
+    "pct_any_gap_within_7d": 39.08554572271387,
+    "median_gap_days": 16.565624999999997
+  },
+  "note": "All splits are strictly temporal. Features use only information available at or before the report time (lags are past-only)."
+}

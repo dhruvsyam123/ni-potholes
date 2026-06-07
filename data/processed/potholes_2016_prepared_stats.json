@@ -1,0 +1,10 @@
+{
+  "n_rows": 5881,
+  "n_unique_grid_cells": 4525,
+  "positive_rate": 0.15439551096752252,
+  "date_min": "2016-04-01 00:03:00",
+  "date_max": "2017-03-31 15:33:00",
+  "grid_res_m": 200,
+  "recurrence_radius_m": 200.0,
+  "recurrence_horizon_d": 14
+}

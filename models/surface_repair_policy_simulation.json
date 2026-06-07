@@ -1,0 +1,175 @@
+{
+  "model": "models/surface_recurrence_best.joblib",
+  "target": "repeat_within_14d_200m",
+  "holdout": {
+    "date_rule": "> 2017-09-30 and <= 2018-03-17 11:34:00",
+    "n": 49360,
+    "observed_target_positive_rate": 0.5689019448946515
+  },
+  "simulation_definition": {
+    "baseline": "Every observed holdout defect occurs and costs event_cost.",
+    "policy": "If an occurring defect has model risk >= threshold, pay intervention_premium and probabilistically suppress future defects within radius and suppression horizon.",
+    "radius_m": 200.0,
+    "caveat": "This is a counterfactual simulation, not causal proof, because the open data does not contain actual intervention timings, repair types, or repair outcomes."
+  },
+  "scenarios": [
+    {
+      "name": "repair_only_14d_conservative",
+      "event_cost": 87.8,
+      "intervention_premium": 30.86,
+      "effectiveness": 0.5,
+      "suppression_horizon_days": 14,
+      "description": "Authority repair budget only. Each prevented future defect avoids one average reactive fill. Intervention premium is the ALARM reactive-minus-planned cost delta."
+    },
+    {
+      "name": "repair_only_14d_good_fix",
+      "event_cost": 87.8,
+      "intervention_premium": 30.86,
+      "effectiveness": 0.75,
+      "suppression_horizon_days": 14,
+      "description": "Same costs as above, but assumes good repair quality prevents 75% of short-window repeats."
+    },
+    {
+      "name": "authority_plus_admin_14d",
+      "event_cost": 155.3,
+      "intervention_premium": 75.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 14,
+      "description": "Authority-centric case including reactive repair plus modest inspection/admin/claim handling burden."
+    },
+    {
+      "name": "moderate_asset_30d",
+      "event_cost": 272.8,
+      "intervention_premium": 125.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 30,
+      "description": "Moderate asset-management case: prevents nearby repeats over 30 days and includes some deterioration/road-user externality in avoided event cost."
+    },
+    {
+      "name": "strong_asset_90d",
+      "event_cost": 579.8,
+      "intervention_premium": 300.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 90,
+      "description": "Stronger asset-effect case: expensive intervention but assumed to suppress local defect recurrence for a quarter."
+    },
+    {
+      "name": "medium_patch_premium_90d_stress",
+      "event_cost": 579.8,
+      "intervention_premium": 1240.2,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 90,
+      "description": "Stress test: medium patch premium approximated as \u00a31,328 minus one average reactive fill. Only viable if broader benefits are large."
+    }
+  ],
+  "best_by_cost_saving_pct": {
+    "repair_only_14d_conservative": {
+      "scenario": "repair_only_14d_conservative",
+      "event_cost": 87.8,
+      "intervention_premium": 30.86,
+      "effectiveness": 0.5,
+      "suppression_horizon_days": 14,
+      "threshold": 0.375,
+      "baseline_cost": 4333808.0,
+      "policy_cost": 3693599.2829291467,
+      "cost_saving": 640208.7170708533,
+      "cost_saving_pct": 0.1477242916785546,
+      "expected_events": 35887.346267096276,
+      "expected_prevented_events": 13472.653732903296,
+      "event_reduction_pct": 0.2729467936163639,
+      "expected_interventions": 17585.556729768756,
+      "intervention_rate": 0.35627140862578516,
+      "nominal_flagged_rate_before_suppression": 0.6243922204213939
+    },
+    "repair_only_14d_good_fix": {
+      "scenario": "repair_only_14d_good_fix",
+      "event_cost": 87.8,
+      "intervention_premium": 30.86,
+      "effectiveness": 0.75,
+      "suppression_horizon_days": 14,
+      "threshold": 0.275,
+      "baseline_cost": 4333808.0,
+      "policy_cost": 3309138.4192411005,
+      "cost_saving": 1024669.5807588995,
+      "cost_saving_pct": 0.23643631207448496,
+      "expected_events": 30082.013528161093,
+      "expected_prevented_events": 19277.986471837838,
+      "event_reduction_pct": 0.39055888314098275,
+      "expected_interventions": 21644.122860310472,
+      "intervention_rate": 0.43849519571131423,
+      "nominal_flagged_rate_before_suppression": 0.8280591572123177
+    },
+    "authority_plus_admin_14d": {
+      "scenario": "authority_plus_admin_14d",
+      "event_cost": 155.3,
+      "intervention_premium": 75.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 14,
+      "threshold": 0.4,
+      "baseline_cost": 7665608.000000001,
+      "policy_cost": 6615936.670364186,
+      "cost_saving": 1049671.3296358148,
+      "cost_saving_pct": 0.13693256029212747,
+      "expected_events": 35484.62761762006,
+      "expected_prevented_events": 13875.372382381853,
+      "event_reduction_pct": 0.2811055993188804,
+      "expected_interventions": 14735.653351345136,
+      "intervention_rate": 0.298534306145566,
+      "nominal_flagged_rate_before_suppression": 0.5722649918962723
+    },
+    "moderate_asset_30d": {
+      "scenario": "moderate_asset_30d",
+      "event_cost": 272.8,
+      "intervention_premium": 125.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 30,
+      "threshold": 0.325,
+      "baseline_cost": 13465408.0,
+      "policy_cost": 10977214.424621478,
+      "cost_saving": 2488193.5753785223,
+      "cost_saving_pct": 0.184784120568684,
+      "expected_events": 31863.773849506488,
+      "expected_prevented_events": 17496.226150495346,
+      "event_reduction_pct": 0.35446163189816676,
+      "expected_interventions": 18278.215347799713,
+      "intervention_rate": 0.3703042007252778,
+      "nominal_flagged_rate_before_suppression": 0.7213128038897894
+    },
+    "strong_asset_90d": {
+      "scenario": "strong_asset_90d",
+      "event_cost": 579.8,
+      "intervention_premium": 300.0,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 90,
+      "threshold": 0.3,
+      "baseline_cost": 28618927.999999996,
+      "policy_cost": 21926441.88338988,
+      "cost_saving": 6692486.116610117,
+      "cost_saving_pct": 0.23384824604926216,
+      "expected_events": 28569.73093053938,
+      "expected_prevented_events": 20790.26906946262,
+      "event_reduction_pct": 0.42119669913818114,
+      "expected_interventions": 17872.372966185576,
+      "intervention_rate": 0.36208211033601245,
+      "nominal_flagged_rate_before_suppression": 0.7726904376012966
+    },
+    "medium_patch_premium_90d_stress": {
+      "scenario": "medium_patch_premium_90d_stress",
+      "event_cost": 579.8,
+      "intervention_premium": 1240.2,
+      "effectiveness": 0.6,
+      "suppression_horizon_days": 90,
+      "threshold": 0.75,
+      "baseline_cost": 28618927.999999996,
+      "policy_cost": 27973598.620964598,
+      "cost_saving": 645329.3790353984,
+      "cost_saving_pct": 0.022549040936662563,
+      "expected_events": 45491.694524909246,
+      "expected_prevented_events": 3868.3054750905176,
+      "event_reduction_pct": 0.07836923571901852,
+      "expected_interventions": 1288.110091438234,
+      "intervention_rate": 0.026096233619089016,
+      "nominal_flagged_rate_before_suppression": 0.0715964343598055
+    }
+  }
+}
