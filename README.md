@@ -1,14 +1,14 @@
-# NI Potholes — Cost-Saving Maintenance Model
+# NI Potholes Cost-Saving Maintenance Model
 
-This repo contains the final retained workflow for turning historic pothole
-defect data into a maintenance policy that aims to reduce repair cost.
+This repo contains the final workflow for using historic pothole defect data to
+build a maintenance policy that aims to reduce repair cost.
 
 The project is built on official DfI surface-defect pothole records and
-official DfI road-network geometry. It does not try to model asphalt physics
-directly. It learns operational recurrence patterns from historic defect data,
-then uses those predictions inside a repair-planning simulation.
+official DfI road-network geometry. It is not a physics model of asphalt
+failure. It learns recurrence patterns from historic defect data, then uses
+those predictions inside a repair-planning simulation.
 
-The strongest final conclusion is simple: the main saving comes from identifying
+The main finding is straightforward. The biggest saving comes from identifying
 high-burden road sections before winter and planning bundled permanent patching
 on those sections. The best defensible headline from the final scheduler is
 roughly `10-20%` expected cost saving, with the strongest practical case around
@@ -17,7 +17,7 @@ patching is executed well.
 
 ## What The Model Actually Is
 
-This is not one single model. It is a three-layer system.
+This is a three-layer system rather than a single model.
 
 1. A **defect-level recurrence model** predicts whether an official pothole
 defect is likely to be followed by another nearby defect soon. Technically this
@@ -28,14 +28,14 @@ surface-defect pothole records.
 section is likely to generate over the next 180 days. Technically this is a
 `HistGradientBoostingRegressor` with Poisson loss, again using scikit-learn.
 
-3. A **capacity-constrained maintenance scheduler** is layered on top of those
-predictions. This is not another ML model. It is a simulation that decides
-whether it is cheaper to do section treatment, selective spot upgrades, or just
-continue with reactive repair.
+3. A **capacity-constrained maintenance scheduler** sits on top of those
+predictions. This is a simulation, not another ML model. It decides whether it
+is cheaper to do section treatment, selective spot upgrades, or continue with
+reactive repair.
 
-The repo therefore answers a policy question, not just a prediction question:
-given limited crews and intervention costs, what should be repaired first, at
-what scale, and what saving is plausible?
+The repo is aimed at a policy question as well as a prediction question: given
+limited crews and intervention costs, what should be repaired first, at what
+scale, and what saving is plausible?
 
 ## Final Workflow
 
@@ -88,9 +88,9 @@ The retained technical stack is:
 - official DfI road-network geometry joined by `SECTION_CODE`
 - a final scheduler/simulation layer for economic decisions
 
-This is why the project should not be described as “an XGBoost model.” The
-machine-learning part is gradient-boosted trees from scikit-learn, and the
-final decision layer is a simulation.
+So this should not be described as “an XGBoost model.” The machine-learning
+part uses gradient-boosted trees from scikit-learn, and the final decision
+layer is a simulation.
 
 ## Main Outputs
 
@@ -132,15 +132,15 @@ Best results from the final capacity-constrained simulation:
 | Moderate asset | Section treatment only | 837 | 0% | 10.0% | 20.1% |
 | Strong asset | Section + limited spot | 755 | 10% | 13.3% | 28.2% |
 
-What this means operationally:
+What this means in practice:
 
 - The strongest cost-saving lever is planned section treatment before winter.
 - Broad high-volume enhanced spot repair is usually not the cheapest policy.
 - Full resurfacing is not justified from pothole recurrence alone in this data.
   It needs separate pavement-condition and scheme-cost evidence.
 
-The important practical point is that the model is more useful for **planning**
-than for firing off lots of one-off “smart repairs.” Historic data is most
+The key practical point is that the model is more useful for **planning** than
+for triggering large numbers of one-off “smart repairs.” Historic data is most
 valuable when it shows which sections repeatedly fail and should be treated as a
 bundle rather than patched over and over.
 
@@ -166,7 +166,7 @@ The open data does not contain:
 - pavement condition survey data
 
 So the “repair changes future defects” part is simulated with explicit cost and
-effect assumptions. The model is therefore a robust decision-support system, not
+effect assumptions. The result is a robust decision-support system rather than
 causal proof of exact savings.
 
 That means the strongest claims in this repo are:
